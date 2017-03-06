@@ -1,0 +1,85 @@
+<div class="col-lg-12 text-center">
+	<h1 class="text-center text-info">{{sur}}</h1>
+</div>
+<form name="formSurvey" class="form-inline col-lg-10 col-lg-offset-1 graphic text-center">
+	<div class="form-group">
+		<select class="form-control" ng-model='topic' 
+				ng-options="item.value as item.label for item in mainTopics"
+				ng-change="getQuestions(topic)">
+				<option value="">Select a topic</option>
+		</select>	
+	</div>
+	<div ng-if="selectedTopic[0].questions" class="form-group">
+		<select class="form-control" ng-model='question'
+				ng-options="item.value as item.label for item in selectedTopic[0].questions"
+				ng-change="log(question)">
+			<option value="">Select a question</option>
+		</select>	
+	</div>
+	<div ng-if="false" class="form-group">
+		<select class="form-control" ng-model='subq'
+				ng-options="item.value as item.label for item in selectedTopic[0].sub"
+				ng-change="log()">
+			<option value="">Select a question</option>
+		</select>	
+	</div>	
+</form>
+
+<div ng-if="showBar" class="row">
+	<div class="col-lg-10 col-lg-offset-1 graphic">
+		<canvas id="bar" class="chart chart-bar"
+	  chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-colors="colors">
+	</canvas>
+	</div>
+	<div class="col-lg-12">
+		<a download="{{topic}}.png" id="btnpng" type="button" class="btn btn-default col-lg-4 col-lg-offset-4 btn-primary" ng-click="downloadPNG()">descargar imagen</a>
+	</div>	
+</div>
+
+<div ng-if="showBarP" class="row">
+	<div class="col-lg-10 col-lg-offset-1 graphic">
+		<canvas id="bar" class="chart chart-bar"
+	  chart-data="dataP" chart-labels="labelsP" chart-series="seriesP" chart-options="optionsP" chart-colors="colors">
+	</canvas>
+	</div>
+	<div class="col-lg-12">
+		<a download="{{topic}}.png" id="btnpng" type="button" class="btn btn-default col-lg-4 col-lg-offset-4 btn-primary" ng-click="downloadPNG()">descargar imagen</a>
+	</div>	
+</div>
+
+<div ng-if="showBarC" class="row">
+	<div class="col-lg-10 col-lg-offset-1 graphic">
+		<canvas id="bar" class="chart chart-bar"
+	  chart-data="dataC" chart-labels="labelsC" chart-series="seriesC" chart-options="optionsC" chart-colors="colors">
+	</canvas>
+	</div>
+	<div class="col-lg-12">
+		<a download="{{topic}}.png" id="btnpng" type="button" class="btn btn-default col-lg-4 col-lg-offset-4 btn-primary" ng-click="downloadPNG()">descargar imagen</a>
+	</div>	
+</div>
+
+<div ng-if="showBarD" class="row">
+	<div class="col-lg-10 col-lg-offset-1 graphic">
+		<canvas id="bar" class="chart chart-bar"
+	  chart-data="dataD" chart-labels="labelsD" chart-series="seriesD" chart-options="optionsD" chart-colors="colors">
+	</canvas>
+	</div>
+	<div class="col-lg-12">
+		<a download="{{topic}}.png" id="btnpng" type="button" class="btn btn-default col-lg-4 col-lg-offset-4 btn-primary" ng-click="downloadPNG()">descargar imagen</a>
+	</div>	
+</div>
+
+<div ng-if="showBarE" class="row">
+	<div class="col-lg-10 col-lg-offset-1 graphic">
+		<canvas id="base" class="chart-horizontal-bar"
+	  chart-data="dataE" chart-labels="labelsE" chart-series="seriesE" chart-options="optionsE" chart-colors="colors">
+	</canvas>
+	</div>
+	<div class="col-lg-12">
+		<a download="{{topic}}.png" id="btnpng" type="button" class="btn btn-default col-lg-4 col-lg-offset-4 btn-primary" ng-click="downloadPNG()">descargar imagen</a>
+	</div>	
+</div>
+
+<h1 class="text-center" ng-if="!showBarE && !showBarD && !showBarC && !showBarP && !showBar"> <span class="label label-warning"> Nothing Selected </span> </h1>
+
+
