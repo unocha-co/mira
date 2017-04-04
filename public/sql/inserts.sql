@@ -1,38 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2017 a las 15:39:56
--- Versión del servidor: 10.1.8-MariaDB
--- Versión de PHP: 5.6.14
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `kobo`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `answers`
---
-
-CREATE TABLE `answers` (
-  `id` int(11) NOT NULL,
-  `option_id` int(11) NOT NULL,
-  `value` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `respondent_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Volcado de datos para la tabla `answers`
 --
@@ -934,20 +899,6 @@ INSERT INTO `answers` (`id`, `option_id`, `value`, `respondent_id`) VALUES
 (894, 818, '2', 0),
 (895, 817, '3', 0);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `boroughs`
---
-
-CREATE TABLE `boroughs` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `lat` float DEFAULT NULL,
-  `lng` float DEFAULT NULL,
-  `department_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Volcado de datos para la tabla `boroughs`
 --
@@ -957,17 +908,6 @@ INSERT INTO `boroughs` (`id`, `name`, `lat`, `lng`, `department_id`) VALUES
 (2, 'El Bagre', 7.69333, -74.9317, 1),
 (3, 'Bello', 6.33188, -75.588, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `departments`
---
-
-CREATE TABLE `departments` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Volcado de datos para la tabla `departments`
 --
@@ -975,19 +915,6 @@ CREATE TABLE `departments` (
 INSERT INTO `departments` (`id`, `name`) VALUES
 (1, 'Antioquia');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `options`
---
-
-CREATE TABLE `options` (
-  `id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `keyvar` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `label` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `parent` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `options`
@@ -1819,21 +1746,6 @@ INSERT INTO `options` (`id`, `question_id`, `keyvar`, `label`, `parent`) VALUES
 (823, 81, 'no', 'No', 0),
 (824, 81, 'no_sabe', 'No sabe', 0);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `questions`
---
-
-CREATE TABLE `questions` (
-  `id` int(11) NOT NULL,
-  `text_id` int(11) NOT NULL,
-  `topic_id` int(11) NOT NULL,
-  `keyvar` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `parent` int(11) DEFAULT NULL,
-  `utilities` text COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Volcado de datos para la tabla `questions`
 --
@@ -1952,16 +1864,6 @@ INSERT INTO `questions` (`id`, `text_id`, `topic_id`, `keyvar`, `parent`, `utili
 (115, 57, 73, 'problema', 0, '{"priority":false,"multiple":false, "normalized":false}'),
 (116, 58, 73, 'proteccion_infraestructura', 0, '{"priority":true,"multiple":true, "normalized":true}');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `q_text`
---
-
-CREATE TABLE `q_text` (
-  `id` int(11) NOT NULL,
-  `text` varchar(255) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `q_text`
@@ -2027,19 +1929,6 @@ INSERT INTO `q_text` (`id`, `text`) VALUES
 (59, 'Por favor identifique las áreas problemáticas prioritarias dentro de su comunidad entre todos los elementos que se identifican como “un problema severo”'),
 (60, 'Para cada área problemática prioritaria liste los subgrupos dentro de su comunidad que pueden ser los más afectados');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `respondents`
---
-
-CREATE TABLE `respondents` (
-  `id` int(11) NOT NULL,
-  `poblacion` text COLLATE utf8_spanish_ci NOT NULL,
-  `rol` text COLLATE utf8_spanish_ci NOT NULL,
-  `surv_bor_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Volcado de datos para la tabla `respondents`
 --
@@ -2051,40 +1940,12 @@ INSERT INTO `respondents` (`id`, `poblacion`, `rol`, `surv_bor_id`) VALUES
 (4, 'campesina', 'Presidente JAC', 1),
 (5, 'indígena', 'Gobernador indígena', 1),
 (6, 'campesina', 'Líder asociación víctimas MAP', 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `surveys`
---
-
-CREATE TABLE `surveys` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Volcado de datos para la tabla `surveys`
 --
 
 INSERT INTO `surveys` (`id`, `name`) VALUES
 (1, 'COMIRA1R7');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `survey_borough`
---
-
-CREATE TABLE `survey_borough` (
-  `id` int(11) NOT NULL,
-  `survey_id` int(11) NOT NULL,
-  `borough_id` int(11) NOT NULL,
-  `starting_date` datetime NOT NULL DEFAULT '2001-01-01 00:00:00',
-  `finish_date` datetime NOT NULL DEFAULT '2002-02-02 00:00:00',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `survey_borough`
@@ -2093,19 +1954,6 @@ CREATE TABLE `survey_borough` (
 INSERT INTO `survey_borough` (`id`, `survey_id`, `borough_id`, `starting_date`, `finish_date`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, '2001-01-01 00:00:00', '2002-02-02 00:00:00', '2017-03-10 16:30:31', '0000-00-00 00:00:00'),
 (2, 1, 2, '2015-06-17 10:21:25', '2015-06-20 14:25:45', '2017-03-23 13:31:10', '0000-00-00 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `topics`
---
-
-CREATE TABLE `topics` (
-  `id` int(11) NOT NULL,
-  `name` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
-  `keyvar` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `surv_bor_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `topics`
@@ -2167,174 +2015,3 @@ INSERT INTO `topics` (`id`, `name`, `keyvar`, `surv_bor_id`) VALUES
 (83, 'Cuidado Familiar', 'salud_atencion', 2),
 (84, 'Trastorno Mental', 'salud_enfermedad_mental', 2);
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `answers`
---
-ALTER TABLE `answers`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `option_id` (`option_id`);
-
---
--- Indices de la tabla `boroughs`
---
-ALTER TABLE `boroughs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `boroughs_fk0` (`department_id`);
-
---
--- Indices de la tabla `departments`
---
-ALTER TABLE `departments`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `options`
---
-ALTER TABLE `options`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `question_id` (`question_id`);
-
---
--- Indices de la tabla `questions`
---
-ALTER TABLE `questions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `question_fk0` (`topic_id`),
-  ADD KEY `text_id` (`text_id`);
-
---
--- Indices de la tabla `q_text`
---
-ALTER TABLE `q_text`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `respondents`
---
-ALTER TABLE `respondents`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `surveys`
---
-ALTER TABLE `surveys`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `survey_borough`
---
-ALTER TABLE `survey_borough`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `survey_id` (`survey_id`),
-  ADD KEY `borough_id` (`borough_id`);
-
---
--- Indices de la tabla `topics`
---
-ALTER TABLE `topics`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `survey_id` (`surv_bor_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `answers`
---
-ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=896;
---
--- AUTO_INCREMENT de la tabla `boroughs`
---
-ALTER TABLE `boroughs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT de la tabla `departments`
---
-ALTER TABLE `departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `options`
---
-ALTER TABLE `options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=825;
---
--- AUTO_INCREMENT de la tabla `questions`
---
-ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
---
--- AUTO_INCREMENT de la tabla `q_text`
---
-ALTER TABLE `q_text`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
---
--- AUTO_INCREMENT de la tabla `respondents`
---
-ALTER TABLE `respondents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT de la tabla `surveys`
---
-ALTER TABLE `surveys`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `survey_borough`
---
-ALTER TABLE `survey_borough`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT de la tabla `topics`
---
-ALTER TABLE `topics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `answers`
---
-ALTER TABLE `answers`
-  ADD CONSTRAINT `answers_fk2` FOREIGN KEY (`option_id`) REFERENCES `options` (`id`);
-
---
--- Filtros para la tabla `boroughs`
---
-ALTER TABLE `boroughs`
-  ADD CONSTRAINT `boroughs_fk0` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`);
-
---
--- Filtros para la tabla `options`
---
-ALTER TABLE `options`
-  ADD CONSTRAINT `option_fk0` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`);
-
---
--- Filtros para la tabla `questions`
---
-ALTER TABLE `questions`
-  ADD CONSTRAINT `question_fk0` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`),
-  ADD CONSTRAINT `question_fk1` FOREIGN KEY (`text_id`) REFERENCES `q_text` (`id`);
-
---
--- Filtros para la tabla `survey_borough`
---
-ALTER TABLE `survey_borough`
-  ADD CONSTRAINT `s_b_fk0` FOREIGN KEY (`survey_id`) REFERENCES `surveys` (`id`),
-  ADD CONSTRAINT `s_b_fk1` FOREIGN KEY (`borough_id`) REFERENCES `boroughs` (`id`);
-
---
--- Filtros para la tabla `topics`
---
-ALTER TABLE `topics`
-  ADD CONSTRAINT `topic_fk0` FOREIGN KEY (`surv_bor_id`) REFERENCES `survey_borough` (`id`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

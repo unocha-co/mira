@@ -5,7 +5,7 @@ title: Interactive Choropleth Map
 
 ## Interactive Choropleth Map
 
-This is a case study of creating a colorful interactive [choropleth map](http://en.wikipedia.org/wiki/Choropleth_map) of US States Population Density with the help of [GeoJSON](../geojson/) and some [custom controls](../../reference.html#control) (that will hopefully convince all the remaining major news and government websites that do not use Leaflet yet to start doing so).
+This is a case study of creating a colorful interactive [choropleth map](http://en.wikipedia.org/wiki/Choropleth_map) of US States Population Density with the help of [GeoJSON](../geojson) and some [custom controls](../../reference.html#control) (that will hopefully convince all the remaining major news and government websites that do not use Leaflet yet to start doing so).
 
 The tutorial was inspired by the [Texas Tribune US Senate Runoff Results map](http://www.texastribune.org/library/data/us-senate-runoff-results-map/) (also powered by Leaflet), created by [Ryan Murphy](http://www.texastribune.org/about/staff/ryan-murphy/).
 
@@ -13,7 +13,7 @@ The tutorial was inspired by the [Texas Tribune US Senate Runoff Results map](ht
 
 ### Data Source
 
-We'll be creating a visualization of population density per US state. As the amount of data (state shapes and the density value for each state) is not very big, the most convenient and simple way to store and then display it is [GeoJSON](../geojson/).
+We'll be creating a visualization of population density per US state. As the amount of data (state shapes and the density value for each state) is not very big, the most convenient and simple way to store and then display it is [GeoJSON](../geojson).
 
 Each feature of our GeoJSON data ([us-states.js](us-states.js)) will look like this:
 

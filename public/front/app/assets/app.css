@@ -1,33 +1,34 @@
 /* app css stylesheet */
 
 .menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
 }
 
 .menu:before {
-  content: "[";
+    content: "[";
 }
 
 .menu:after {
-  content: "]";
+    content: "]";
 }
 
 .menu > li {
-  display: inline;
+    display: inline;
 }
 
 .menu > li + li:before {
-  content: "|";
-  padding-right: 0.3em;
+    content: "|";
+    padding-right: 0.3em;
 }
-.graphic{
-  padding: 20px 0 !important;
-  margin: 0 auto;
-  float: none;
-  transition: all 0.5s;
+
+.graphic {
+    padding: 20px 0 !important;
+    margin: 0 auto;
+    float: none;
+    transition: all 0.5s;
 }
 
 form select {
@@ -36,19 +37,28 @@ form select {
     white-space: normal;
 }
 
-.margin-5{
-  margin: 5px;
+.margin-5 {
+    margin: 5px;
 }
 
-.font-14{
-  font-size: 14px;
-  font-weight: normal;
+.margin-top-10 {
+    margin-top: 10px;
 }
 
-#chartKOBO{
-  background-color: white;
+.font-14 {
+    font-size: 14px;
+    font-weight: normal;
 }
 
-.nav{
-  margin-bottom: 15px;
+#chartKOBO {
+    background-color: white;
+}
+
+.nav {
+    margin-bottom: 15px;
+}
+
+.padding-boot{
+    padding-left: 15px;
+    padding-right: 15px;
 }

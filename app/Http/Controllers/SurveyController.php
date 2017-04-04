@@ -192,7 +192,7 @@ class SurveyController extends Controller
             }
         }else{
            foreach ($data as $key => $value) {
-                    $data[$key] = $value/$totalPeople * 100;
+                    $data[$key] = round($value/$totalPeople * 100, 2);
             } 
         }
 
