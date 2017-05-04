@@ -13,42 +13,17 @@ angular.module('koboG')
     .controller('HomeCtrl', function ($scope, apiService, $state) {
 
         $scope.init = function () {
-            var tilesDict = {
-                openstreetmap: {
-                    url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    options: {
-                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    }
-                },
-                opencyclemap: {
-                    url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
-                    options: {
-                        attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
-                    }
-                }
-            };
             $scope.markers = [];
             getData();
             angular.extend($scope, {
                 center: {
-                    lat: 4.22765,
-                    lng: -72.85448,
-                    zoom: 5
+                    lat: 6.33236022397594,
+                    lng: -75.55709838867188,
+                    zoom: 7
                 },
                 position: {
                     lat: 51,
                     lng: 0
-                },
-                tiles: tilesDict.opencyclemap,
-                maxbounds: {
-                    northEast: {
-                        lat: -5.61598,
-                        lng: -84.375
-                    },
-                    southWest: {
-                        lat: 16.095,
-                        lng: -61.875
-                    }
                 }
             });
         };

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('question/{id}', 'SurveyController@resolveGraph');
+Route::get('question/{id}/{id_s}', 'SurveyController@resolveGraph');
 Route::get('questions/{id_s}', 'SurveyController@questions');
 Route::get('respondent/{id_s}/{id_r}', 'RespondentController@getAnswers');
 Route::resource('survey', 'SurveyController');

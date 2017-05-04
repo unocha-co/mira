@@ -25,11 +25,13 @@
         .factory("graphService", function () {
 
             function getOptions(question, utilities){
-                var options = {};
+                var options = {
+                    showAllTooltips: false,
+                };
                 options.tooltips = {
-                    intersect:false,
+                    intersect:true,
                 }
-                if (!utilities.normalized && !utilities.priority && !utilities.stacked) {                    
+                if (!utilities.normalized && !utilities.priority && !utilities.stacked) {                  
                     options.title = {
                         display : true,
                         text : question.text.text,
@@ -39,6 +41,34 @@
                     options.legend = {
                         display : true,
                     }
+                }else if (utilities.normalized && !utilities.priority && !utilities.stacked && (question.keyvar === 'areas' || question.keyvar === 'afectados')) {
+                    options.title = {
+                        display : true,
+                        text : question.text.text,
+                        fontSize : 15,
+                        padding: 0,
+                    };
+                    options.legend = {
+                        display : true,
+                    }
+                    options.scales = {
+                        yAxes : [{
+                          stacked: utilities.stacked,
+                          ticks: {            
+                               min: 0,
+                               max: 100,
+                               callback: function(value){return value+ "%"}
+                            },
+                        }]
+                    };
+                    options.tooltips = {
+                            enabled: true,
+                            callbacks: {
+                                label: function (item, data){
+                                    return data.datasets[item.datasetIndex].label +': ' + item.yLabel + '%'
+                                }
+                            }
+                        }
                 }else{
                     options.title = {
                         display : true,

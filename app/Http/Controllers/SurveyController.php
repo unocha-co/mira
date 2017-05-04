@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SurveyBorough;
 use App\Questions;
+use App\Respondents;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -96,7 +97,7 @@ class SurveyController extends Controller
         $questions = [];
         foreach ($resource->topics as $topic) {
             foreach ($topic->questions as $question) {
-                $data = $this->resolveGraph($question->id);
+                $data = $this->resolveGraph($question->id, $surv_id);
                 $data['question'] = $question;
                 $questions[] = $data;
             }
@@ -104,33 +105,31 @@ class SurveyController extends Controller
         return $questions;
     }
 
-    public function resolveGraph($question_id)
+    public function resolveGraph($question_id, $surv_id)
     {
         $resolved = [];
         $totalPeople = 0;
-        
+
+        $respondents = Respondents::where('surv_bor_id','=',$surv_id)->get();
+        $all = $respondents->count();
 
         $question = Questions::with('options.answers', 'options.subOptions.answers')->findOrFail($question_id);
         $resolved['utilities'] = json_decode($question->utilities);
         $options = $question->options;
 
         if($question->parent != 0){
-            $parent = Questions::with('options.answers')->findOrFail($question->parent);
+            $parentQ = Questions::with('options.answers')->findOrFail($question->parent);
             if ($resolved['utilities']->checked_yes) {                
-                foreach ($parent->options as $op) {
+                foreach ($parentQ->options as $op) {
                     if ($op->keyvar=='si') {
                         $totalPeople = count($op->answers);
                     }
                 }
             }else{
-                foreach ($parent->options as $op) {
-                    $totalPeople += count($op->answers);
-                }
+                $totalPeople = $all;
             }           
         }else{
-            foreach ($options as $op) {
-                $totalPeople += count($op->answers);
-            }
+            $totalPeople = $all;         
         }
 
         $resolved['respondent'] = $totalPeople;
@@ -138,57 +137,107 @@ class SurveyController extends Controller
         
         //dd($question);
         $resolved['values']=[];
-        foreach ($options as $op) {
-            if ($op->parent == 0) {
-                $resolved['labels'][] = $op->label;
-                $resolved['series']=[];
-                $temp = [];
-                if (count($op->subOptions)>0) {
-                    $resolved['utilities']->stacked = true;
-                    foreach ($op->subOptions as $subOption) {
-                        if (!in_array($subOption->label,  $resolved['series'])) {
-                             $resolved['series'][] = $subOption->label;
+        if($question->keyvar == 'afectados'){
+            $resolved['utilities']->stacked = false;
+            $resolved['series'] = [];
+            foreach ($parentQ->options as $op) {
+                if (count($op->answers)!== 0) {
+                   $resolved['labels'][] = $op->label;
+                   $totalsarray[$op->label]= count($op->answers);
+                }
+            }
+            foreach ($options as $op) {
+                $resolved['series'][]=$op->label;
+                $valuesarray = [];
+                foreach ($resolved['labels'] as $l) {
+                    $cont = 0;                 
+                    foreach ($op->answers as $ans) {
+                        if($ans->value == $l){
+                            $cont++;
                         }
-                        $temp[] = count($subOption->answers);                         
+                    }
+                    $valuesarray[]=round(($cont/$totalsarray[$l])*100,2);
+                }
+                $temparray[]=$valuesarray;          
+            }
+        $resolved['values'] = $temparray;
+        }else if ($question->keyvar == 'general') {
+            $resolved['series']=[];
+            $collection = SurveyBorough::with(['topics.questions'=>function($query){
+                $query->where('keyvar','=','problema');
+            },'topics.questions.text', 'topics.questions.options.answers'])->findOrFail($surv_id);
+
+            $topics = $collection->topics;
+            foreach ($topics as $topic) {
+                if(count($topic->questions)>0){
+                    $temp = [];
+                    $resolved['labels'][] = $topic->name;
+                    $question = $topic->questions[0];
+                    $resolved['utilities']->stacked = true;
+                    foreach ($question->options as $op) {
+                        if (!in_array($op->label,  $resolved['series'])) {
+                            $resolved['series'][] = $op->label;
+                        }
+                        $temp[] = count($op->answers);
                     }
                     for ($i=0; $i < count($resolved['series']); $i++) { 
-                       $resolved['values'][$i][] = $temp[$i];
-                    }
-                }else{
-                    $resolved['utilities']->stacked = false;
-                    $resolved['series'][] = 'answers';
-
-                    if ($resolved['utilities']->priority) {
-                        $totalClusters = count($resolved['utilities']->weights);
-                        $temp = array_fill(0, $totalClusters, 0);
-                        foreach ($op->answers as $ans) {
-                            $index = intval($ans->value) - 1;
-                            $temp[$index]++;
+                           $resolved['values'][$i][] = $temp[$i];
                         }
-                        $total = 0;
-                        foreach ($temp as $key => $value) {
-                            $temp[$key] = $value*$resolved['utilities']->weights[$key];
-                            $total += $temp[$key];
+                    
+                }
+            }
+            return $resolved;
+        }else{
+            foreach ($options as $op) {
+                if ($op->parent == 0) {
+                    $resolved['labels'][] = $op->label;
+                    $resolved['series']=[];
+                    $temp = [];
+                    if (count($op->subOptions)>0) {
+                        $resolved['utilities']->stacked = true;
+                        foreach ($op->subOptions as $subOption) {
+                            if (!in_array($subOption->label,  $resolved['series'])) {
+                                 $resolved['series'][] = $subOption->label;
+                            }
+                            $temp[] = count($subOption->answers);                         
                         }
-                        $resolved['values'][] = $total;
+                        for ($i=0; $i < count($resolved['series']); $i++) { 
+                           $resolved['values'][$i][] = $temp[$i];
+                        }
                     }else{
-                        $resolved['values'][] = intval(count($op->answers));
-                    }                    
-                }              
+                        $resolved['utilities']->stacked = false;
+                        $resolved['series'][] = 'answers';
+
+                        if ($resolved['utilities']->priority) {
+                            $totalClusters = count($resolved['utilities']->weights);
+                            $temp = array_fill(0, $totalClusters, 0);
+                            foreach ($op->answers as $ans) {
+                                $index = intval($ans->value) - 1;
+                                $temp[$index]++;
+                            }
+                            $total = 0;
+                            foreach ($temp as $key => $value) {
+                                $temp[$key] = $value*$resolved['utilities']->weights[$key];
+                                $total += $temp[$key];
+                            }
+                            $resolved['values'][] = $total;
+                        }else{
+                            $resolved['values'][] = intval(count($op->answers));
+                        }                    
+                    }              
+                }
+            }
+            if($resolved['utilities']->normalized){
+                $resolved['values'] = $this->normalize($resolved['values'], $totalPeople, $resolved['utilities']->priority);
             }
         }
-
-        if($resolved['utilities']->normalized){
-            $resolved['values'] = $this->normalize($resolved['values'], $totalPeople, $resolved['utilities']->priority);
-        }
-
         return $resolved;
     }
 
     private function normalize($data, $totalPeople, $priorityFlag){
         if ($priorityFlag) {
             foreach ($data as $key => $value) {
-                    $data[$key] = $value/$totalPeople;
+                    $data[$key] = round($value/$totalPeople, 2);
             }
         }else{
            foreach ($data as $key => $value) {

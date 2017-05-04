@@ -62,3 +62,28 @@ form select {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+@media print {
+  /* Contenido del fichero print.css */
+      @page {
+      size: A4;
+    }
+  body {
+    font-size: 12pt;
+  }
+    .graphic {
+    display: inline;
+    padding: 0 !important;
+}
+
+    .printed-graph{
+        /*page-break-before: always;*/
+        page-break-inside: avoid;
+        /*overflow: hidden !important;*/
+
+    }
+
+    .nav-tabs.nav-justified{
+        display: none;
+    }
+}
