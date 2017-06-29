@@ -137,7 +137,7 @@ class SurveyController extends Controller
         
         //dd($question);
         $resolved['values']=[];
-        if($question->keyvar == 'afectados'){
+        if(isset($resolved['utilities']->vertical) && $resolved['utilities']->vertical){
             $resolved['utilities']->stacked = false;
             $resolved['series'] = [];
             foreach ($parentQ->options as $op) {
@@ -161,10 +161,10 @@ class SurveyController extends Controller
                 $temparray[]=$valuesarray;          
             }
         $resolved['values'] = $temparray;
-        }else if ($question->keyvar == 'general') {
+        }else if (isset($resolved['utilities']->global) && $resolved['utilities']->global) {
             $resolved['series']=[];
             $collection = SurveyBorough::with(['topics.questions'=>function($query){
-                $query->where('keyvar','=','problema');
+                $query->where('keyvar','LIKE','%problema%'); 
             },'topics.questions.text', 'topics.questions.options.answers'])->findOrFail($surv_id);
 
             $topics = $collection->topics;

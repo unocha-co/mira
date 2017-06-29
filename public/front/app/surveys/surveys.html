@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div ng-if="question && question.keyvar !== 'problema'  && utilities.stacked" class="row">
+                <div ng-if="question && !utilities.pie  && utilities.stacked" class="row">
                     <div id="chartKOBO" class="col-lg-11 graphic">
                         <canvas id="bar" class="chart chart-bar"
                                 chart-data="data" chart-labels="labels" chart-series="series" chart-options="options"
@@ -48,7 +48,7 @@
                     </div>
                 </div>
 
-                <div ng-if="question && question.keyvar !== 'problema' && question.keyvar === 'afectados'" class="row">
+                <div ng-if="question && !utilities.pie && utilities.vertical" class="row">
                     <div id="chartKOBO" class="col-lg-11 graphic">
                         <canvas id="bar" class="chart chart-bar"
                                 chart-data="data" chart-labels="labels" chart-series="series" chart-options="options"
@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <div ng-if="!utilities.stacked && question && question.keyvar !== 'problema' && question.keyvar !== 'salud_diarrea_niños' && question.keyvar !== 'afectados' && question.keyvar !== 'asistencia' && question.keyvar !== 'asistencia_previa' && question.keyvar !== 'condiciones'"
+                <div ng-if="!utilities.stacked && question && !utilities.pie && !utilities.vertical"
                      class="row">
                     <div id="chartKOBO" class="col-lg-11 graphic">
                         <canvas id="base" class="chart-horizontal-bar"
@@ -148,7 +148,7 @@
                                 <span class="label label-success">Total encuestados: {{question.questionRespondents}}</span>
                             </h2>
                         </div>
-                        <div ng-if="question && question.question.keyvar !== 'problema' && question.utilities.stacked" class="col-lg-9 graphic">
+                        <div ng-if="question && !question.utilities.pie && question.utilities.stacked" class="col-lg-9 graphic">
                             <canvas id="bar_{{question.id}}" class="chart chart-bar"
                                     chart-data="question.data" chart-labels="question.labels"
                                     chart-series="question.series" chart-options="question.options"
@@ -156,14 +156,14 @@
                             </canvas>
                         </div>
 
-                         <div ng-if="question && question.question.keyvar !== 'problema' && question.question.keyvar === 'afectados'" class="col-lg-9 graphic">
+                         <div ng-if="question && !question.utilities.pie && question.utilities.vertical" class="col-lg-9 graphic">
                                 <canvas id="bar_{{question.id}}" class="chart chart-bar"
                                         chart-data="question.data" chart-labels="question.labels" chart-series="question.series" chart-options="question.options"
                                         chart-colors="colors">
                                 </canvas>
                         </div>
 
-                        <div ng-if="!question.utilities.stacked && question && question.question.keyvar !== 'problema' && question.question.keyvar !== 'salud_diarrea_niños' && question.question.keyvar !== 'afectados' && question.question.keyvar !== 'asistencia' && question.question.keyvar !== 'asistencia_previa' && question.question.keyvar !== 'condiciones'" class="col-lg-9 graphic">
+                        <div ng-if="!question.utilities.stacked && question && !question.utilities.pie && !question.utilities.vertical" class="col-lg-9 graphic">
                                 <canvas id="base_{{question.id}}" class="chart-horizontal-bar"
                                         chart-data="question.data" chart-labels="question.labels"
                                         chart-series="question.series" chart-options="question.options"
