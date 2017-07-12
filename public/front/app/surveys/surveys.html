@@ -96,7 +96,7 @@
                             <div ng-repeat="topic in individualAnswers" uib-accordion-group class="panel-info"
                                  heading="{{topic.name}}" ng-if="topic.keyvar !== 'problemas_severos'">
                                 <div ng-repeat="question in topic.questions" class="col-lg-12">
-                                    <h4>{{question.text.text}}?</h4>
+                                    <h4>{{question.text.text}}</h4>
                                     <div ng-if="!question.jsonUtilities.priority && !question.jsonUtilities.stacked && question.jsonUtilities.multiple">
                                         <div ng-repeat="option in question.options" class="col-lg-6 margin-5"
                                              ng-if="option.answers.length > 0">

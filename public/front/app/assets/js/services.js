@@ -41,7 +41,7 @@
                     options.legend = {
                         display : true,
                     }
-                }else if (utilities.normalized && !utilities.priority && !utilities.stacked && (question.keyvar === 'areas' || question.keyvar === 'afectados')) {
+                } else if (utilities.normalized && !utilities.priority && !utilities.stacked && utilities.vertical) {
                     options.title = {
                         display : true,
                         text : question.text.text,
